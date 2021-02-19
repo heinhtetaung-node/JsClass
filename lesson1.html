@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="search" onkeydown="checkKey(event)">
+	<input type="button" id="search" value="search" onclick="searchData()">
+	<input type="button" id="clear" value="Clear Search" onclick="clearSearch()" style="display: none;" onmouseover="clearTips()" onmouseout="clearOut()">
+	<span id="tips"></span>
+
+
+	<p id="id-text"></p>
+
+	<table style="display: none;" id="tableId">
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+
+
+	<script type="text/javascript">
+		var oriText = "Hello World"
+		document.getElementById('id-text').innerHTML = oriText;
+
+		function searchData(){
+			var searchval = document.getElementById('search').value;
+			document.getElementById('id-text').innerHTML = 'Your search detail is ' + searchval;
+			// debugger;  // check what happened in above lines similar exit
+			document.getElementById('tableId').style.display = 'block';
+			// debugger;
+			document.getElementById('clear').style.display = 'block';
+		}
+
+		function clearSearch(){
+			document.getElementById('tableId').style.display = 'none';
+			document.getElementById('id-text').innerHTML = oriText;
+			document.getElementById('search').value = '';
+			document.getElementById('clear').style.display = 'none';
+		}
+
+		document.querySelector('.row').addEventListener('mouseover', event => {
+			alert('say hello');
+		})
+
+		function clearTips(){
+			document.getElementById('tips').innerHTML = 'Rollback to origin state';
+		}
+
+		function clearOut(){
+			document.getElementById('tips').innerHTML = '';
+		}
+
+		function checkKey(event){
+			if (event.key === 'Enter') {
+				searchData();
+			}
+		}
+
+	</script>
+	
+</body>
+</html>
