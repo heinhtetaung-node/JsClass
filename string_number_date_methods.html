@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo"></p>
+
+<hr>
+
+<p id="demo2"></p>
+
+<hr>
+
+<p id="demo3"></p>
+<input type="text" id="txt1"><button id="post" onclick="post()">Post</button>
+<p id="hashTag"></p>
+<hr>
+
+<p id="demo4"></p>
+<p id="demo5"></p>
+<hr>
+
+<p id="demo6"></p>
+<script>
+
+// string with object
+var x = "John";        // x is a string
+var y = new String("John");  // y is an object
+// debugger;
+document.getElementById("demo").innerHTML =
+typeof x + "<br>" + typeof y;
+
+
+var str = 'abc';
+document.getElementById("demo2").innerHTML = str.length;
+
+
+var str = "Please locate where 'locate' occurs!";
+var pos = str.indexOf("locate");
+document.getElementById("demo3").innerHTML = pos;
+
+
+function post() {
+	var txt1 = document.getElementById('txt1').value;
+	var pos = txt1.indexOf('#');  // find position of # in string txt1
+	
+	var txt1Obj = new String(txt1);
+	alpha = '';
+	var i = pos;
+	var hashStr = '';
+	while(alpha != ' ' && i < txt1.length){
+		console.log(txt1Obj[i]);
+		alpha = txt1Obj[i]
+		if(alpha != ' '){
+			hashStr = hashStr + alpha
+		}
+		i++;
+	}
+	console.log(i);	
+	console.log(txt1Obj);
+	document.getElementById('hashTag').innerHTML = hashStr;
+}
+
+
+var str = "Please locate where 'locate' occurs!";
+var pos = str.lastIndexOf("locate", 15); // 15 နဲ့ အနီးဆုံးကောင်ကိုရှာမယ်
+document.getElementById("demo4").innerHTML = pos;
+
+var str = "Please locate where 'locate' occurs!";
+var pos = str.lastIndexOf("locate", 25); // 25 နဲ့ အနီးဆုံးကောင်ကိုရှာမယ်
+document.getElementById("demo5").innerHTML = pos;
+
+
+// equal with indexOf
+// var str = "Please locate where 'locate' occurs!";
+// var pos = str.search("locate");
+// document.getElementById("demo").innerHTML = pos;
+
+
+// The two methods, indexOf() and search(), are equal?
+// They accept the same arguments (parameters), and return the same value?
+// The two methods are NOT equal. These are the differences:
+// The search() method cannot take a second start position argument.
+// The indexOf() method cannot take powerful search values (regular expressions).
+
+
+var str = "Apple, Banana, Kiwi";
+var res = str.slice(15,19);  // အစမှတ်နဲ့ အဆုံးမှတ် ကို မူတည်ဖြတ်ထုတ်ချင်ရင် သုံး ဥပမာ Kiwi ကို ဖြတ်ချင်ရင် အစက 15, အဆုံးမှတ် 19
+
+// အဆုံးမှတ်မပေးရင် အစမှတ်ကနေ အဆုံးထိဖြတ်သွားရော
+// var res = str.slice(7); // Banana, Kiwi
+
+document.getElementById("demo6").innerHTML = res; // Kiwi
+
+// substring = same with slice 
+
+// var str = "Apple, Banana, Kiwi";
+// var res = str.substr(7,6);  စမှတ်ကနေ length ကိုစရေတာ
+// document.getElementById("demo").innerHTML = res;  // Banana
+
+
+
+
+var txt = "a,b,c,d,e";   // String
+var txtArr = txt.split(",");          // Split on commas change string to array
+console.log(txtArr);  // (5) ["a", "b", "c", "d", "e"]
+
+
+</script>
+
+</body>
+</html>
