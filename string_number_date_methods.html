@@ -19,6 +19,16 @@
 <hr>
 
 <p id="demo6"></p>
+<hr>
+
+
+<h2>Creating date object</h2>
+<p id="demo7"></p>
+<p id="demo7b"></p>
+<p id="demo8"></p>
+<p id="demo9"></p>
+<h2>Creating date object with milisecond</h2>
+<p id="demo10"></p>
 <script>
 
 // string with object
@@ -103,6 +113,49 @@ var txt = "a,b,c,d,e";   // String
 var txtArr = txt.split(",");          // Split on commas change string to array
 console.log(txtArr);  // (5) ["a", "b", "c", "d", "e"]
 
+
+// 2021 2 28 , 12:30:10:0
+var d28 = new Date(2021, 1, 28, 12, 30, 10, 0);  // လက 0 ကစရေတွက်လို့ ၁နှုတ်ပြီးထည့်ရတယ် ၂လပိုင်းဆို 1, ၁လပိုင်းဆို 0
+document.getElementById("demo7").innerHTML = d28;
+// 2021-02-28 12:30:10
+document.getElementById("demo7b").innerHTML = getStandardDateFormat(d28);	
+
+
+// TOday date
+var d = new Date();
+document.getElementById("demo8").innerHTML = d;
+document.getElementById("demo9").innerHTML = getStandardDateFormat(d);	
+
+function getStandardDateFormat(dateObj) {
+	var d = dateObj;
+	var year = d.getFullYear();
+	var month = d.getMonth()+1;  // လက 0 ကစရေတွက်လို့ ၁ပေါင်းပေး
+	if(month < 10){
+	  month = '0'+month;
+	}
+	var day = d.getDate();
+	if(day < 10){
+	  day = '0'+day;
+	}
+	var minute = d.getMinutes();
+	if(minute < 10){
+	  minute = '0'+minute;
+	}
+	var seconds = d.getSeconds();
+	if(seconds < 10){
+	  seconds = '0'+seconds;
+	}
+	var finalDate = year+'-'+month+'-'+day+' '+d.getHours()+':'+minute+':'+seconds;
+	return finalDate;
+}
+
+
+
+var timeStampMilisec = Math.floor(Date.now());  // code for get current Date in milisecond
+console.log(timeStampMilisec);
+
+var d = new Date(timeStampMilisec);  // get current date obj
+document.getElementById("demo10").innerHTML = timeStampMilisec + ' = ' + d;
 
 </script>
 
