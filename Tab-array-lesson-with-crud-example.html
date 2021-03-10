@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+  	<div class="container">
+	    <ul class="nav nav-tabs" id="myTab" role="tablist">
+		  <li class="nav-item">
+		    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" 
+		    onclick="changeTab(this, 'home')" aria-selected="true">Question</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" 
+		    onclick="changeTab(this, 'profile')" aria-selected="false">Answer</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" 
+		    onclick="changeTab(this, 'contact')" aria-selected="false">Test</a>
+		  </li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+		  	
+
+		  	<p>Question</p>
+			<textarea id="question">
+				
+			</textarea>
+			<br>
+
+			<p>Answer1</p>
+			<textarea id="answer1">
+				
+			</textarea>
+			<br>
+
+			<p>Answer2</p>
+			<textarea id="answer2">
+				
+			</textarea>
+			<br>
+
+			<p>Answer3</p>
+			<textarea id="answer3">
+				
+			</textarea>
+			<br>
+
+			<p>Answer4</p>
+			<textarea id="answer4">
+				
+			</textarea>
+			<br>
+			Best Answer<br>
+			<input type="radio" value="1" name="ans"> Ans:1 
+			<input type="radio" value="2" name="ans"> Ans:2 
+			<input type="radio" value="3" name="ans"> Ans:3 
+			<input type="radio" value="4" name="ans"> Ans:4 <br>
+
+			<br>
+			<button id="add_question" @click="addQuestion()">Add Question</button>
+
+
+
+		  </div>
+		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+		  	Answer
+		  	<br>
+		  	This is answer
+		  </div>
+		  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Test</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		function changeTab(atab, div){
+			var divs = document.getElementsByClassName('nav-link');
+			for(i = 0; i< divs.length; i++){
+			  	divs[i].classList.remove('active');
+			}
+			document.getElementById(div+'-tab').classList.add('active');
+
+
+			var divs = document.getElementsByClassName('tab-pane');
+			for(i = 0; i< divs.length; i++){
+			  	divs[i].style.display = 'none';
+			}
+			document.getElementById(div).style.display = 'block';
+			document.getElementById(div).classList.remove('fade')
+		}
+
+
+		var questions = [];
+		function addQuestion() {
+			
+		}
+
+
+	</script>
+  </body>
+</html>
