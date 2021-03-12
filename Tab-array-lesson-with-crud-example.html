@@ -9,6 +9,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <style type="text/css">
+    	.questionDiv {
+    		border: 1px solid black;
+    		margin: 15px;
+    		padding: 5px;
+    	}
+    </style>
   </head>
   <body>
   	<div class="container">
@@ -27,50 +34,48 @@
 		  </li>
 		</ul>
 		<div class="tab-content" id="myTabContent">
-		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-		  	
 
-		  	<p>Question</p>
-			<textarea id="question">
+
+			<!--- Question Tab --->
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 				
-			</textarea>
-			<br>
+				<div id="questionDivList">
 
-			<p>Answer1</p>
-			<textarea id="answer1">
-				
-			</textarea>
-			<br>
-
-			<p>Answer2</p>
-			<textarea id="answer2">
-				
-			</textarea>
-			<br>
-
-			<p>Answer3</p>
-			<textarea id="answer3">
-				
-			</textarea>
-			<br>
-
-			<p>Answer4</p>
-			<textarea id="answer4">
-				
-			</textarea>
-			<br>
-			Best Answer<br>
-			<input type="radio" value="1" name="ans"> Ans:1 
-			<input type="radio" value="2" name="ans"> Ans:2 
-			<input type="radio" value="3" name="ans"> Ans:3 
-			<input type="radio" value="4" name="ans"> Ans:4 <br>
-
-			<br>
-			<button id="add_question" @click="addQuestion()">Add Question</button>
+					
+	    		</div>
 
 
+				<p>Question</p>
+				<textarea id="question"></textarea>
+				<br>
 
-		  </div>
+				<p>Answer1</p>
+				<textarea id="answer1"></textarea>
+				<br>
+
+				<p>Answer2</p>
+				<textarea id="answer2"></textarea>
+				<br>
+
+				<p>Answer3</p>
+				<textarea id="answer3"></textarea>
+				<br>
+
+				<p>Answer4</p>
+				<textarea id="answer4"></textarea>
+				<br>
+				Best Answer<br>
+				<input type="radio" id="ans1" value="1" name="ans"> Ans:1 
+				<input type="radio" id="ans2" value="2" name="ans"> Ans:2 
+				<input type="radio" id="ans3" value="3" name="ans"> Ans:3 
+				<input type="radio" id="ans4" value="4" name="ans"> Ans:4 <br>
+				<input type="hidden" value="" id="updateKey">
+				<br>
+				<button id="add_question" onclick="addQuestion()">Add Question</button>
+				<button id="update_question" style="display: none" onclick="updateQuestion()">Update Question</button>
+			</div>
+			<!------------------------>
+
 		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 		  	Answer
 		  	<br>
@@ -100,9 +105,92 @@
 
 		var questions = [];
 		function addQuestion() {
-			
+			const question = document.getElementById('question').value;
+			const answer1 = document.getElementById('answer1').value;
+			const answer2 = document.getElementById('answer2').value;
+			const answer3 = document.getElementById('answer3').value;
+			const answer4 = document.getElementById('answer4').value;
+			const bestAnswer = document.querySelector('input[name="ans"]:checked').value;
+			console.log(question, answer1, answer2, answer3, answer4, bestAnswer);
+
+			const questionObj = {
+				question : question, 
+				answer1 : answer1, 
+				answer2 : answer2,
+				answer3 : answer3,
+				answer4 : answer4,
+				bestAnswer : bestAnswer				
+			};
+			questions.push(questionObj);
+
+			resetQuestion();
+			showQustions();
 		}
 
+		function showQustions(){
+			let divs = "";
+			for(let key in questions){
+				const qObj = questions[key];
+
+				divs = divs +
+					`<div class="questionDiv">
+	    				<h3>${qObj.question}</h3>
+	    				<p>Ans1: ${qObj.answer1}</p>
+	    				<p>Ans2: ${qObj.answer2}</p>
+	    				<p>Ans3: ${qObj.answer3}</p>
+	    				<p>Ans4: ${qObj.answer4}</p>
+	    				<p>Best Answer : ${qObj.bestAnswer}</p>
+	    				<button onclick="deleteQuestion(${key})">Delete</button>
+	    				<button onclick="editQuestion(${key})">Edit</button>
+	    			</div>`
+	    		;
+			}
+			document.getElementById('questionDivList').innerHTML = divs;
+		}
+
+		function deleteQuestion(key){
+			questions.splice(key, 1);
+			showQustions();
+		}
+
+		function editQuestion(key){
+			const qObj = questions[key];
+			document.getElementById('question').value = qObj.question;
+			document.getElementById('answer1').value = qObj.answer1;
+			document.getElementById('answer2').value = qObj.answer2;
+			document.getElementById('answer3').value = qObj.answer3;
+			document.getElementById('answer4').value = qObj.answer4;
+			const idName = "ans"+qObj.bestAnswer;
+			const radiobtn = document.getElementById(idName);
+			document.getElementById('add_question').style.display = "none";
+			document.getElementById('update_question').style.display = "block";	
+			document.getElementById('updateKey').value = key;
+			radiobtn.checked = true;
+		}
+
+		function resetQuestion() {
+			document.getElementById('question').value = "";
+			document.getElementById('answer1').value = "";
+			document.getElementById('answer2').value = "";
+			document.getElementById('answer3').value = "";
+			document.getElementById('answer4').value = "";
+			const radiobtn = document.querySelector('input[name="ans"]:checked');
+			radiobtn.checked = false;
+		}
+
+		function updateQuestion() {
+			const key = document.getElementById('updateKey').value;
+			questions[key].question = document.getElementById('question').value;
+			questions[key].answer1 = document.getElementById('answer1').value;
+			questions[key].answer2 = document.getElementById('answer2').value;
+			questions[key].answer3 = document.getElementById('answer3').value;
+			questions[key].answer4 = document.getElementById('answer4').value;
+			questions[key].bestAnswer = document.querySelector('input[name="ans"]:checked').value;
+			resetQuestion();
+			showQustions();
+			document.getElementById('add_question').style.display = "block";
+			document.getElementById('update_question').style.display = "none";	
+		}
 
 	</script>
   </body>
