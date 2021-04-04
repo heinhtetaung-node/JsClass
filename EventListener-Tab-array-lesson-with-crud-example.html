@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		.answerTable{
+			margin: 20px 0 20px 0;
+			border: 1px solid gray;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container mt-5">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+				aria-selected="true" >Question</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Answer</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true" >User</a>
+			</li>
+			<li class="nav-item" style="display: none">
+				<a class="nav-link" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true" >Answer Detail</a>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show" id="detail" role="tabpanel" aria-labelleby="home-tab">
+				<div id="showAnswerDetail"></div>
+			</div>
+
+			<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelleby="home-tab">
+				
+					
+				<div id="allInfo"></div>
+				<p>Question</p>
+				<textarea id="question"></textarea>
+				<br>
+				<p>Answer1</p>
+				<textarea id="answer1"></textarea>
+				<br>
+				<p>Answer2</p>
+				<textarea id="answer2"></textarea>
+				<br>
+				<p>Answer3</p>
+				<textarea id="answer3"></textarea>
+				<br>
+				<p>Answer4</p>
+				<textarea id="answer4"></textarea>
+				<br>
+				Best Answer <br>
+				<input type="radio" id="ans1" value="1" name="ans"> Ans:1
+				<input type="radio" id="ans2" value="2" name="ans"> Ans:2
+				<input type="radio" id="ans3" value="3" name="ans"> Ans:3
+				<input type="radio" id="ans4" value="4" name="ans"> Ans:4
+				<input type="hidden" value="" id="updateKey">
+				<br><br>
+				<button id="add_question">Add Question</button>
+				<button id="update_question" style="display: none;" onclick="updateQuestion()">Update Question</button>
+				<br><br>
+			</div>
+			<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelleby="profile-tab">
+				User Answer
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Candidate Name</th>
+								<th scope="col">Answer</th>
+								<th scope="col">User Answer</th>
+							</tr>
+						</thead>
+						<tbody id="table">
+						
+						</tbody>
+					</table>
+			</div>
+			<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelleby="contact-tab">
+				
+				<div id="candidateUser"></div>	
+				<div id="userInfo"></div>
+				<div id="candidateButton"></div>
+			</div>
+		</div>
+	</div>
+
+	<button onclick="removeClick()">Remove</button>
+
+	<script type="text/javascript">
+		/********* End date javascript *************/
+		// document.getElementById('add_question').addEventListener('click', listenAddQuestion);	
+
+		// function listenAddQuestion() {
+		// 	alert('abc');
+		// 	addQuestion();
+		// }
+
+		// document.getElementById('add_question').addEventListener('click', function() {
+		// 	alert('abc');
+		// 	addQuestion();	
+		// });			
+		/******************************************/
+
+
+		/********** Es6 arrow function **************/
+		// const listenAddQuestion = () => {
+		// 	alert('abc');
+		// 	addQuestion();	
+		// }
+
+		// document.getElementById('add_question').addEventListener('click', listenAddQuestion);	
+
+		const listenAddQuestion = () => {
+			alert('abc');
+			addQuestion();		
+		}
+		document.getElementById('add_question').addEventListener('click', listenAddQuestion);
+
+
+		function removeClick() {  
+			document.getElementById('add_question').removeEventListener('click', listenAddQuestion);
+		}		
+
+		document.getElementById('question').addEventListener('change', function(e) {
+			console.log(e.target.value);
+		})
+
+		// document.getElementById('home-tab').addEventListener('click', function(e){
+		// 	changeTab(e, 'home');
+		// });
+		// document.getElementById('profile-tab').addEventListener('click', function(e){
+		// 	changeTab(e, 'profile');
+		// });
+
+		
+		var userAnswer = [];
+		var questions = [];
+		const changeTab = (atab, div, key = null) => {
+			alert('abc');
+			var divs = document.getElementsByClassName('nav-link');
+			for (i = 0; i < divs.length; i++) {
+				divs[i].classList.remove('active');
+			}
+			document.getElementById(div + '-tab').classList.add('active');
+			var divs = document.getElementsByClassName('tab-pane');
+			for (i = 0; i < divs.length; i++) {
+				divs[i].style.display = 'none';
+			}
+			document.getElementById(div).style.display = 'block';
+			document.getElementById(div).classList.remove('fade');
+
+			if (div == 'detail') {
+				alert(key);
+				showAnswerDetail(key);
+			}
+		}
+
+		document.getElementById('home-tab').addEventListener('click', (event) => changeTab(event, 'home'));
+		document.getElementById('profile-tab').addEventListener('click', (event) => changeTab(event, 'profile'));
+
+		function showAnswerDetail(key) {
+			alert(key);
+			console.log(userAnswer[key]);
+			const ans = userAnswer[key];
+			let divs = '';
+			for (let key in ans.answers) {
+				const ansObj = ans.answers[key];
+				divs = divs +
+					`<div class="answerTable">
+						<p>Question: ${ansObj.question}</p>
+						<p>Answer1: ${ansObj.answer1}</p>
+						<p>Answer:2 ${ansObj.answer2}</p>
+						<p>Answer3: ${ansObj.answer3}</p>
+						<p>Answer4: ${ansObj.answer4}</p>
+						<p>Best Answer: ${ansObj.bestAnswer}</p>
+						<p>User Answer: ${ansObj.userAnswer}</p>					
+					</div>`;
+			}
+			document.getElementById('showAnswerDetail').innerHTML = divs;
+		}
+
+
+		function addQuestion(){
+			var question = document.getElementById('question').value;
+			var answer1 = document.getElementById('answer1').value;
+			var answer2 = document.getElementById('answer2').value;
+			var answer3 = document.getElementById('answer3').value;
+			var answer4 = document.getElementById('answer4').value;
+			var bestAnswer = document.querySelector('input[name="ans"]:checked').value;
+			const questionObj = {
+				question : question,
+				answer1 : answer1,
+				answer2 : answer2,
+				answer3: answer3,
+				answer4 : answer4,
+				bestAnswer : bestAnswer
+			}
+			questions.push(questionObj);
+			restQuestion();
+			showQuestions();
+			showUserAnswer();
+		}
+		function showQuestions(){
+			let divs = '';
+			for(let key in questions){
+				const qObj = questions[key];
+				divs = divs +
+					`<div class="answerTable">
+						<h3>User Answer</h3>
+						<p>Question: ${qObj.question}</p>
+						<p>Answer1: ${qObj.answer1}</p>
+						<p>Answer:2 ${qObj.answer2}</p>
+						<p>Answer3: ${qObj.answer3}</p>
+						<p>Answer4: ${qObj.answer4}</p>
+						<p>Best Answer: ${qObj.bestAnswer}</p>
+						<button onclick="deleteQuestion(${key})">Delete</button>
+						<button data-key=${key} class='edit'">Edit</button>
+					</div>`;
+			}
+			document.getElementById('allInfo').innerHTML = divs;
+
+			document.getElementsByClassName('edit').addEventListener('click', function(event) {
+				const key = event.getAttribute('data-key');
+				alert(key);
+				editQuestion(key);
+			});
+		}
+		
+
+
+		function showUserAnswer(){
+			let divs = '';
+			let html = '';
+			let buttons = '';
+			html += `
+						User
+						<p>Candidate Name</p>
+						<textarea id="candidate"></textarea>
+						<br>
+			`;
+			for (let key in questions) {
+				const qObj = questions[key];
+				divs = divs + `
+					<div class="answerTable">
+						<h3>User Answer</h3>
+						<p>Question: ${qObj.question}</p>
+						<p>Answer1: ${qObj.answer1}</p>
+						<p>Answer2: ${qObj.answer2}</p>
+						<p>Answer3: ${qObj.answer3}</p>
+						<p>Answer4: ${qObj.answer4}</p>	
+						<input type="radio" onclick='updateAnswerToArray(${key}, 1)' id="ans1" value="1" name="ansc${key}"> Ans:1
+						<input type="radio" onclick='updateAnswerToArray(${key}, 2)' id="ans2" value="2" name="ansc${key}"> Ans:2
+						<input type="radio" onclick='updateAnswerToArray(${key}, 3)' id="ans3" value="3" name="ansc${key}"> Ans:3
+						<input type="radio" onclick='updateAnswerToArray(${key}, 4)' id="ans4" value="4" name="ansc${key}"> Ans:4	
+					</div>	
+				`;
+			}
+			buttons += `
+				<button id="" onclick="addSubmit()">Submit</button>
+			`;
+			document.getElementById('candidateUser').innerHTML = html;
+			document.getElementById('userInfo').innerHTML = divs;
+			document.getElementById('candidateButton').innerHTML = buttons;
+		}
+		function updateAnswerToArray(key, answer){
+			questions[key].userAnswer = answer;
+		}
+		
+		function addSubmit(){
+			var candidate = document.getElementById('candidate').value;
+			var correctAnswer = 0;
+			for (let key in questions) {
+				if (questions[key].bestAnswer == questions[key].userAnswer) {
+					correctAnswer++;
+				}
+			}
+			const candidateObj = {
+				candidate: candidate,
+				answers: questions,
+				correctAnswer: correctAnswer,
+				questionCnt: questions.length
+			};
+			userAnswer.push(candidateObj);
+			showAnswer();
+			alert('Hello, World');
+		}
+		function showAnswer(){
+			let divs = '';
+			for(let key in userAnswer){
+				const answerObj = userAnswer[key];
+				divs += `
+						<tr>
+							<th scope="row">${key+1}</th>
+							<td>${answerObj.candidate}</td>
+							<td>${answerObj.questionCnt}</td>
+							<td><a href="#" onclick="changeTab(event, 'detail', ${key})"> ${answerObj.correctAnswer} </a></td>
+						</tr>		
+				`;
+			}
+			document.getElementById('table').innerHTML = divs;
+		}
+		
+		function deleteQuestion(key){
+			questions.splice(key, 1);
+			showQuestions();
+		}
+		function editQuestion(key){
+			const qObj = questions[key];
+			document.getElementById('question').value = qObj.question;
+			document.getElementById('answer1').value = qObj.answer1;
+			document.getElementById('answer2').value = qObj.answer2;
+			document.getElementById('answer3').value = qObj.answer3;
+			document.getElementById('answer4').value = qObj.answer4;
+			const radiobtn = document.getElementById('ans' + qObj.bestAnswer);
+			radiobtn.checked = true;
+			document.getElementById('add_question').style.display = 'none';
+			document.getElementById('update_question').style.display = 'block';
+			document.getElementById('updateKey').value = key;
+		}
+		function restQuestion(){
+			document.getElementById('question').value = '';
+			document.getElementById('answer1').value = '';
+			document.getElementById('answer2').value = '';
+			document.getElementById('answer3').value = '';
+			document.getElementById('answer4').value = '';
+			document.querySelector('input[name="ans"]:checked').checked = false;
+		}
+		function updateQuestion(){
+			const key = document.getElementById('updateKey').value;
+			questions[key].question = document.getElementById('question').value;
+			questions[key].answer1 = document.getElementById('answer1').value;
+			questions[key].answer2 = document.getElementById('answer2').value;
+			questions[key].answer3 = document.getElementById('answer3').value;
+			questions[key].answer4 = document.getElementById('answer4').value;
+			questions[key].bestAnswer = document.querySelector('input[name="ans"]:checked').value;
+			restQuestion();
+			showQuestions();
+			document.getElementById('add_question').style.display = 'block';
+			document.getElementById('update_question').style.display = 'none';
+		}
+	</script>
+</body>
+</html>
