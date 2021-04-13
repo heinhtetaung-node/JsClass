@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Javascript</title>
+</head>
+<body onload="init()">
+	<select onchange="searchData()">
+		<option>Cat1</option>
+		<option>Cat2</option>
+		<option>Cat3</option>
+	</select>
+	<br>
+	<input type="text" name="name" id="search"  onkeydown="checkKey(event)">
+	<input type="button" value="Search" onclick="searchData()" >
+	<input type="button" id="clear" value="Clear Search" style="display: none" onclick="clearSearch()" onmouseover="clearTips()" onmouseout="removeTips()" >
+	<span id="tips"></span>
+
+	<p id="id-text"></p>
+
+	<table style="display: none;" id="tbl-search">
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr class="row">
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+
+	<img src="https://loremflickr.com/1920/1080" onload="gettingImage()" />
+
+<script type="text/javascript">
+
+	var oriText;
+	function init(){
+		alert('body is loaded');
+		oriText = 'Please search data';
+		document.getElementById('id-text').innerHTML = oriText;
+	}
+
+	function gettingImage(){
+		console.log('getting');
+	}
+
+	function searchData() {
+		document.getElementById('id-text').innerHTML = "Search result for "+document.getElementById('search').value;
+		document.getElementById('tbl-search').style.display = 'block';
+		document.getElementById('clear').style.display = 'block';
+	}
+
+	function clearSearch() {
+		document.getElementById('id-text').innerHTML = oriText;
+		document.getElementById('tbl-search').style.display = 'none';
+		document.getElementById('search').value = '';
+		document.getElementById('clear').style.display = 'none';
+	}
+
+	document.querySelector('.row').addEventListener('mouseover', event => {
+  		alert('abc')
+	})
+
+
+	function clearTips() {
+		document.getElementById('tips').innerHTML = 'Rollback to original state';
+	}
+
+	function removeTips() {
+		document.getElementById('tips').innerHTML = '';	
+	}
+
+	function checkKey(event) {
+		if(event.key == 'Enter') {
+			searchData();
+		}
+	}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style>
+		.answerTable{
+			margin: 20px 0 20px 0;
+			border: 1px solid gray;
+			padding: 10px;
+		}
+
+		#humbuger {
+			display: none;
+		}
+
+		#dropdown-menu {
+			transition: 0.5s;
+		}
+
+		@media only screen and (max-width: 640px) {
+			#humbuger {
+				display: block;
+			}
+			#web-menus {
+				display: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div style="background-color:gray; width:100%; height:50px; padding:0px; margin:0px auto;">
+		<div class="container" style="display:flex; justify-content: space-between; flex-direction:row-reverse; justify-items:center; text-align:center; padding:8px">
+			<div style="" id="web-menus">
+				<a style="font-size: 20px; color:#fff; font-weight:bold; padding-left: 20px; padding-right: 20px">Home</a>
+				<a style="font-size: 20px; color:#fff; font-weight:bold; padding-left: 20px; padding-right: 20px">About</a>
+				<a style="font-size: 20px; color:#fff; font-weight:bold; padding-left: 20px; padding-right: 20px">Contact</a>
+			</div>
+			<div style="color:#fff; font-size:20px; cursor: pointer" id="humbuger">
+				&#9776;
+			</div>
+		</div>
+
+		<table style="width:auto; min-width:360px; max-width:360px;">
+			<tr>
+				<td style="border:1px solid gray">1</td>
+				<td style="border:1px solid gray">3</td>
+				<td style="border:1px solid gray">4</td>
+			</tr>
+
+			<tr>
+				<td style="border:1px solid gray">ddd</td>
+				<td style="border:1px solid gray">eeee ddddd</td>
+				<td style="border:1px solid gray">eeee dddddd eeee eeee eeee eeee eeee eeee</td>
+			</tr>
+
+			<tr>
+				<td style="border:1px solid gray">h45454</td>
+				<td style="border:1px solid gray">787878</td>
+				<td style="border:1px solid gray">45454</td>
+			</tr>
+		</table>
+	</div>	
+
+	<div style="width:100%; height:0px; overflow: hidden; position:fixed; background-color: aliceblue; display: flex; flex-direction: column;" id="dropdown-menu">
+		<a style="font-size: 20px; color:black; font-weight:bold; padding-left: 20px; padding-right: 20px">Home</a>
+		<a style="font-size: 20px; color:black; font-weight:bold; padding-left: 20px; padding-right: 20px">About</a>
+		<a style="font-size: 20px; color:black; font-weight:bold; padding-left: 20px; padding-right: 20px">Contact</a>
+	</div>
+</body>
+</html>
+
+<script type="text/javascript">
+	document.getElementById('humbuger').addEventListener('click', function() {
+		const height = document.getElementById('dropdown-menu').style.height;
+		if (height == '0px') {
+			document.getElementById('dropdown-menu').style.height = '200px';
+		}else{
+			document.getElementById('dropdown-menu').style.height = '0px';
+		}
+	});
+</script>
