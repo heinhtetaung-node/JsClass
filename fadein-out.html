@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fade in / Fade out</title>
+	<style type="text/css">
+		.active {
+			background: yellow;
+			transition: 0.5s;
+		}
+		.hidden {
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<a id="m1" class="menuitem" href="#" onclick="appearPage('div1', event)">Page1</a>
+	<a id="m2" class="menuitem" href="#" onclick="appearPage('div2', event)">Page2</a>	
+	<div style="display: flex; flex-direction: column">
+		<div id="div1" class="divctn hidden" style="width: 100%; height: 300px; background: blue">p1</div>
+		<div id="div2" class="divctn hidden" style="width: 100%; height: 300px; background: red">p2</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function() {
+			document.getElementById('m1').click();
+		};		
+
+		function appearPage(div, e) {
+			const menuitems = document.getElementsByClassName('menuitem');
+			for(var i = 0; i < menuitems.length; i++){
+				const item = menuitems[i];
+				if (item.classList.contains('active')) {
+					item.classList.remove('active');
+				}
+			}
+
+			const divctns = document.getElementsByClassName('divctn');
+			for(var i = 0; i < divctns.length; i++){
+				const item = divctns[i];
+				if (!item.classList.contains('hidden')) {
+					item.classList.add('hidden');
+				}
+			}
+
+			e.target.classList.add('active');			
+			document.getElementById(div).classList.remove('hidden');
+		}
+	</script>
+</body>
+</html>
