@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>axio test</title>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<style type="text/css">
+    	.questionDiv {
+    		border: 1px solid black;
+    		margin: 15px;
+    		padding: 5px;
+    	}
+    </style>
+</head>
+<body>
+	<pre id="demo"></pre>
+
+	<div id="container"></div>
+
+	<input id="q" >
+	<input id="a1" >
+	<input id="a2" >
+	<input id="a3" >
+	<input id="a4" >
+	Best Answer<br>
+				<input type="radio" id="ans1" value="1" name="ans"> Ans:1 
+				<input type="radio" id="ans2" value="2" name="ans"> Ans:2 
+				<input type="radio" id="ans3" value="3" name="ans"> Ans:3 
+				<input type="radio" id="ans4" value="4" name="ans"> Ans:4 <br>
+				<input type="hidden" value="" id="updateKey">
+				<br>
+	<button onclick="saveData()">Save Data</button>
+
+
+	<script type="text/javascript">
+		
+	window.onload = function() {
+		// javascript code sending ajax
+		// const xhttp = new XMLHttpRequest();
+		// xhttp.open("GET", "http://hhaitlife.com:8081/api/questions", true);
+		// xhttp.send();
+		// xhttp.onreadystatechange = function() {
+		// 	if (this.readyState == 4 && this.status == 200) {
+		//   		document.getElementById("demo").innerHTML = this.responseText;
+		// 	}
+		// };
+
+		getDataWithAxioAjax();
+	}		
+	function getDataWithAxioAjax() {
+		// What is promise? will teach later in es6
+		axios.get("http://hhaitlife.com:8081/api/questions").then(res => {
+			let divs = "";
+			for ( let i in res.data.data ) {
+				const obj = res.data.data[i];
+				divs = divs +
+					`<div class="questionDiv">
+	    				<h3>${obj.questionTitle}</h3>
+	    				<p>Ans1: ${obj.answer1}</p>
+	    				<p>Ans2: ${obj.answer2}</p>
+	    				<p>Ans3: ${obj.answer3}</p>
+	    				<p>Ans4: ${obj.answer4}</p>
+	    				<p>Best Answer : ${obj.bestAnswer}</p>
+	    				<button onclick="deleteQuestion(${i})">Delete</button>
+	    				<button onclick="editQuestion(${obj.id})">Edit</button>
+	    			</div>`
+			}
+			document.getElementById("container").innerHTML = divs;
+		});
+	}
+
+
+	function saveData() {
+		const topicId = 1;
+		const questionTitle = document.getElementById('q').value;
+		const answer1 = document.getElementById('a1').value;
+		const answer2 = document.getElementById('a2').value;
+		const answer3 = document.getElementById('a3').value;
+		const answer4 = document.getElementById('a4').value;
+		const bestAnswer = document.querySelector('input[name="ans"]:checked').value;
+		const syllabusId = 1;
+		console.log(`topicId=${topicId}&questionTitle=${questionTitle}&answer1=${answer1}&answer2=${answer2}&answer3=${answer3}&answer4=${answer4}&bestAnswer=${bestAnswer}&syllabusId=${syllabusId}`);
+
+		// javascript pure code for ajax
+		// const xhttp = new XMLHttpRequest();
+		// xhttp.open("POST", "http://hhaitlife.com:8081/api/questions", true);
+		// xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		// xhttp.send(`topicId=${topicId}&questionTitle=${questionTitle}&answer1=${answer1}&answer2=${answer2}&answer3=${answer3}&answer4=${answer4}&bestAnswer=${bestAnswer}&syllabusId=${syllabusId}`);
+		// xhttp.onreadystatechange = function() {
+		// 	if (this.readyState == 4 && this.status == 200) {
+		//   		document.getElementById("demo").innerHTML = this.responseText;
+		// 	}
+		// };
+
+		// getDataWithAxioAjax();
+		const arr = {
+			topicId : topicId,
+			questionTitle : questionTitle,
+			answer1 : answer1,
+			answer2 : answer2,
+			answer3 : answer3,
+			answer4 : answer4,
+			bestAnswer : bestAnswer,
+			syllabusId : syllabusId
+		};
+		postDataWithAxioAjax(arr);
+	}
+
+	function postDataWithAxioAjax(arr) {
+		axios.post("http://hhaitlife.com:8081/api/questions", arr).then(res => {
+			console.log(res);
+			console.log(res.data);	
+			console.log(res.data.success);	
+			if ( res.data.success == true ) {
+				getDataWithAxioAjax();
+			} else{
+				alert('error');				
+			}
+		}).catch(err => {
+			alert('Please specify all fields');
+			console.log(err);
+		})
+	}
+
+	function update(arr) {
+		// const arr = {
+		// 	topicId : topicId,
+		// 	questionTitle : questionTitle,
+		// 	answer1 : answer1,
+		// 	answer2 : answer2,
+		// 	answer3 : answer3,
+		// 	answer4 : answer4,
+		// 	bestAnswer : bestAnswer,
+		// 	syllabusId : syllabusId
+		// 	id : // 
+		// };
+		axios.post("http://hhaitlife.com:8081/api/questions", arr).then(res => {
+			console.log(res);
+			console.log(res.data);	
+			console.log(res.data.success);	
+			if ( res.data.success == true ) {
+				getDataWithAxioAjax();
+			} else{
+				alert('error');				
+			}
+		}).catch(err => {
+			alert('Please specify all fields');
+			console.log(err);
+		})
+	}
+
+	function deleteQuestion() {
+		// http://hhaitlife.com:8081/api/questions/id
+		// axios.delete
+	}
+
+	</script>
+</body>
+</html>
